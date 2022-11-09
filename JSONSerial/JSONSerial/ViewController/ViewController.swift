@@ -39,20 +39,19 @@ class ViewController: UIViewController {
     
     @objc
     func manualDecodeButtonPressed() {
-        print("Manual Button Pressed")
-        let pokemon = NetworkManager.shared.getPokemonManually()
-        self.presentPokemonAlert(pokemon: pokemon)
+        let Dragon = NetworkManager.shared.getPokemonManually()
+        self.presentPokemonAlert(dragon: Dragon)
     }
 
     
-    func presentPokemonAlert(pokemon: Pokemon?) {
-        guard let pokemon = pokemon else { return }
+    func presentPokemonAlert(dragon: Dragon?) {
+        guard let pokemon = dragon else { return }
         
-        let moveNames = pokemon.moves.compactMap {
-            return $0.move.name
+        let dragonArr = pokemon.pokemons.compactMap {
+            return $0.pokemon.name
         }
         
-        let alert = UIAlertController(title: "Dragon", message: "\(moveNames)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Dragon", message: "\(dragonArr)", preferredStyle: .alert)
         let okayAction = UIAlertAction(title: "Okay", style: .default)
         alert.addAction(okayAction)
         
@@ -62,6 +61,5 @@ class ViewController: UIViewController {
     
 
 }
-
 
 

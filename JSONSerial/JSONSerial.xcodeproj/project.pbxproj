@@ -13,9 +13,9 @@
 		0938BD84291AE872006E7C00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0938BD82291AE872006E7C00 /* Main.storyboard */; };
 		0938BD86291AE875006E7C00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0938BD85291AE875006E7C00 /* Assets.xcassets */; };
 		0938BD89291AE875006E7C00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0938BD87291AE875006E7C00 /* LaunchScreen.storyboard */; };
-		0938BD94291AE95E006E7C00 /* SampleJSONGlaceon.json in Resources */ = {isa = PBXBuildFile; fileRef = 0938BD93291AE95E006E7C00 /* SampleJSONGlaceon.json */; };
 		0938BD96291AE997006E7C00 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938BD95291AE997006E7C00 /* NetworkManager.swift */; };
 		0938BD98291AE9C5006E7C00 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938BD97291AE9C5006E7C00 /* Pokemon.swift */; };
+		0938BD9A291C2CA6006E7C00 /* SampleJSONDragon.json in Resources */ = {isa = PBXBuildFile; fileRef = 0938BD99291C2CA5006E7C00 /* SampleJSONDragon.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +27,9 @@
 		0938BD85291AE875006E7C00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0938BD88291AE875006E7C00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0938BD8A291AE875006E7C00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0938BD93291AE95E006E7C00 /* SampleJSONGlaceon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SampleJSONGlaceon.json; sourceTree = "<group>"; };
 		0938BD95291AE997006E7C00 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		0938BD97291AE9C5006E7C00 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		0938BD99291C2CA5006E7C00 /* SampleJSONDragon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleJSONDragon.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		0938BD92291AE8AF006E7C00 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				0938BD93291AE95E006E7C00 /* SampleJSONGlaceon.json */,
+				0938BD99291C2CA5006E7C00 /* SampleJSONDragon.json */,
 				0938BD95291AE997006E7C00 /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -158,10 +158,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0938BD9A291C2CA6006E7C00 /* SampleJSONDragon.json in Resources */,
 				0938BD89291AE875006E7C00 /* LaunchScreen.storyboard in Resources */,
 				0938BD86291AE875006E7C00 /* Assets.xcassets in Resources */,
 				0938BD84291AE872006E7C00 /* Main.storyboard in Resources */,
-				0938BD94291AE95E006E7C00 /* SampleJSONGlaceon.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

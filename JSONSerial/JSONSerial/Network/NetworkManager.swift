@@ -26,8 +26,8 @@ final class NetworkManager {
 // MARK: Manual Decoding
 extension NetworkManager {
     
-    func getPokemonManually() -> Pokemon? {
-        guard let path = Bundle.main.path(forResource: "SampleJSONGlaceon", ofType: "json") else {
+    func getPokemonManually() -> Dragon? {
+        guard let path = Bundle.main.path(forResource: "SampleJSONDragon", ofType: "json") else {
             return nil
         }
         
@@ -45,99 +45,135 @@ extension NetworkManager {
         return nil
     }
     
-    private func parsePokemonManually(base: [String: Any]) -> Pokemon? {
+    private func parsePokemonManually(base: [String: Any]) -> Dragon? {
+//
+//
+        guard let damageRelations = base["damage_relations"] as? [String: Any]
+        else {
+            return nil}
         
-        guard let abilitiesArr = base["abilities"] as? [[String: Any]] else {
-            print("Failed ability Arr")
-            return nil
+        guard let doubleDamageFromArr = damageRelations["double_damage_from"] as? [[String: Any]] else {
+            return nil}
+        
+        var doubleDamageFrom : [NameUrl] = []
+        
+        doubleDamageFromArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else {
+                return}
+            doubleDamageFrom.append(temp)
+        }
+        //double damage to
+        guard let doubleDamageToArr = damageRelations["double_damage_to"] as? [[String:Any]] else {
+            return nil}
+        var doubleDamageTo : [NameUrl] = []
+        doubleDamageToArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else {
+                return}
+            doubleDamageTo.append(temp)
         }
         
-        // Abilities
-        var returnAbilities: [Ability] = []
-        abilitiesArr.forEach {
-            guard let abilityDict = $0["ability"] as? [String: Any] else { return }
-            guard let abilityRep = self.parseNameLink(nameLink: abilityDict) else { return }
-            guard let isHidden = $0["is_hidden"] as? Bool else { return }
-            guard let slot = $0["slot"] as? Int else { return }
-            let ability = Ability(ability: abilityRep, isHidden: isHidden, slot: slot)
-            returnAbilities.append(ability)
+        
+        //halfDamageFrom
+        guard let halfDamageFromArr = damageRelations["half_damage_from"] as? [[String:Any]] else {
+            return nil}
+        var halfDamageFrom : [NameUrl] = []
+        halfDamageFromArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else{
+                return}
+            halfDamageFrom.append(temp)
+        }
+        //halfDamageTo
+        guard let halfDamageToArr = damageRelations["half_damage_to"] as? [[String:Any]] else {
+            return nil}
+        var halfDamageTo : [NameUrl] = []
+        halfDamageToArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else{
+                return}
+            halfDamageTo.append(temp)
+        }
+        //noDamageFrom
+        guard let noDamageFromArr = damageRelations["no_damage_from"] as? [[String:Any]] else {
+            return nil}
+        var noDamageFrom : [NameUrl] = []
+        noDamageFromArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else{
+                return}
+            noDamageFrom.append(temp)
+        }
+        //noDamageTo
+        guard let noDamageToArr = damageRelations["no_damage_to"] as? [[String:Any]] else{
+            return nil}
+        var noDamageTo : [NameUrl] = []
+        noDamageToArr.forEach(){
+            guard let temp = self.parseNameLink(nameLink: $0) else{
+                return}
+            noDamageTo.append(temp)
         }
         
-        guard let baseExp = base["base_experience"] as? Int else { return nil }
-        
-        // Forms
-        guard let formsArr = base["forms"] as? [[String: Any]] else { return nil }
-        var returnForms: [NameLink] = []
-        formsArr.forEach{
-            guard let form = self.parseNameLink(nameLink: $0) else { return }
-            returnForms.append(form)
+
+        let damage = DamageRelations(doubleDamageFrom: doubleDamageFrom, doubleDamageTo: doubleDamageTo, halfDamageFrom: halfDamageFrom, halfDamageTo: halfDamageTo, noDamageFrom: noDamageFrom, noDamageTo: noDamageTo)
+        //gameIndices
+        guard let gameIndicesArr = base["game_indices"] as? [[String: Any]] else{
+            return nil}
+        var gameIndices : [GameIndices] = []
+        gameIndicesArr.forEach(){
+            guard let gameIndex = $0["game_index"] as? Int else{
+                return}
+            guard let generation = $0["generation"] as? [String:Any] else{
+                return}
+            guard let returnGeneration = self.parseNameLink(nameLink: generation) else {
+                return}
+            gameIndices.append(GameIndices(gameIndex:gameIndex, generation: returnGeneration))
         }
         
-        // GameIndeces
-        guard let gameIndecesArr = base["game_indices"] as? [[String: Any]] else { return nil }
-        var returnGameIndeces: [GameIndex] = []
-        gameIndecesArr.forEach{
-            guard let gameIndex = $0["game_index"] as? Int else { return }
-            guard let version = $0["version"] as? [String: Any] else { return }
-            guard let returnVersion = self.parseNameLink(nameLink: version) else { return }
-            let gameIndece = GameIndex(gameIndex: gameIndex, version: returnVersion)
-            returnGameIndeces.append(gameIndece)
+        
+        // generation
+        guard let generation = base["generation"] as? [String: Any]else {
+            return nil}
+        guard let regeneration = self.parseNameLink(nameLink: generation) else{
+            return nil}
+//        let
+        
+        // id
+        guard let id = base["id"] as? Int else{
+            return nil}
+        
+        //moveDamageClass
+        guard let moveDamageClass = base["move_damage_class"] as? [String : Any] else {
+            return nil}
+        guard let removeDamageClass = self.parseNameLink(nameLink:moveDamageClass) else {
+            return nil }
+        
+        //moves
+        guard let movesArr = base["moves"] as? [[String: Any]]else {
+            return nil}
+        var moves : [NameUrl] = []
+        movesArr.forEach(){
+            guard let move = self.parseNameLink(nameLink: $0) else {return}
+            moves.append(move)
         }
         
-        guard let height = base["height"] as? Int else { return  nil }
-        guard let id = base["id"] as? Int else { return nil }
-        guard let isDefault = base["is_default"] as? Bool else { return nil }
-        guard let locationAreaEncounters = base["location_area_encounters"] as? String else { return nil }
+        // name
         
-        // Moves
-        guard let movesArr = base["moves"] as? [[String: Any]] else { return nil }
-        var returnMoves: [Move] = []
-        movesArr.forEach {
-            guard let moveDict = $0["move"] as? [String: Any] else { return }
-            guard let moveRep = self.parseNameLink(nameLink: moveDict) else { return }
-            let move = Move(move: moveRep)
-            returnMoves.append(move)
+        guard let name = base["name"] as? String else{return nil}
+        
+        // pokemons
+        guard let pokemonArr = base["pokemon"] as? [[String:Any]] else{return nil}
+        var pokemons :[Pokemon] = []
+        pokemonArr.forEach(){
+            guard let pokemon = $0["pokemon"] as? [String : Any] else {return}
+            guard let poke = self.parseNameLink(nameLink: pokemon) else{return}
+            pokemons.append(Pokemon(pokemon: poke))
         }
         
-        guard let name = base["name"] as? String else { return nil }
-        guard let order = base["order"] as? Int else { return nil }
         
-        guard let speciesDict = base["species"] as? [String: Any] else { return nil }
-        guard let species = self.parseNameLink(nameLink: speciesDict) else { return nil }
-        
-        
-        // Sprites
-        guard let spriteDict = base["sprites"] as? [String: Any] else { return nil }
-        let backDefault = spriteDict["back_default"] as? String
-        let backFemale = spriteDict["back_female"] as? String
-        let backShiny = spriteDict["back_shiny"] as? String
-        let backShinyFemale = spriteDict["back_shiny_female"] as? String
-        let frontDefault = spriteDict["front_default"] as? String
-        let frontFemale = spriteDict["front_female"] as? String
-        let frontShiny = spriteDict["front_shiny"] as? String
-        let frontShinyFemale = spriteDict["front_shiny_female"] as? String
-        let sprites = Sprites(backDefault: backDefault, backFemale: backFemale, backShiny: backShiny, backShinyFemale: backShinyFemale, frontDefault: frontDefault, frontFemale: frontFemale, frontShiny: frontShiny, frontShinyFemale: frontShinyFemale)
-        
-        
-        return Pokemon(abilities: returnAbilities,
-                       baseExperience: baseExp,
-                       forms: returnForms,
-                       gameIndeces: returnGameIndeces,
-                       height: height,
-                       id: id,
-                       isDefault: isDefault,
-                       locationAreaEncounters: locationAreaEncounters,
-                       moves: returnMoves,
-                       name: name,
-                       order: order,
-                       species: species,
-                       sprites: sprites)
+        return Dragon(damageRelations: damage, gameIndices: gameIndices, generation: regeneration, id: id, moveDamageClass: removeDamageClass, moves: moves, name: name, pokemons: pokemons)
     }
     
-    private func parseNameLink(nameLink: [String: Any]) -> NameLink? {
+    private func parseNameLink(nameLink: [String: Any]) -> NameUrl? {
         guard let name = nameLink["name"] as? String else { return nil }
         guard let url = nameLink["url"] as? String else { return nil }
-        return NameLink(name: name, url: url)
+        return NameUrl(name: name, url: url)
     }
     
     

@@ -8,49 +8,38 @@
 import Foundation
 
 
-struct Pokemon {
-    let abilities: [Ability]
-    let baseExperience: Int
-    let forms: [NameLink]
-    let gameIndeces: [GameIndex]
-    let height: Int
+struct Dragon {
+    let damageRelations : DamageRelations
+    let gameIndices : [GameIndices]
+    let generation : NameUrl
     let id: Int
-    let isDefault: Bool
-    let locationAreaEncounters: String
-    let moves: [Move]
-    let name: String
-    let order: Int
-    let species: NameLink
-    let sprites: Sprites
+    let moveDamageClass : NameUrl
+    let moves : [NameUrl]
+    let name : String
+    let pokemons : [Pokemon]
+    
+}
+struct Pokemon {
+    let pokemon : NameUrl
 }
 
-struct Ability {
-    let ability: NameLink
-    let isHidden: Bool
-    let slot: Int
+struct GameIndices {
+    let gameIndex : Int
+    let generation : NameUrl
 }
 
-struct GameIndex {
-    let gameIndex: Int
-    let version: NameLink
+
+struct DamageRelations {
+    let doubleDamageFrom : [NameUrl]
+    let doubleDamageTo : [NameUrl]
+    let halfDamageFrom : [NameUrl]
+    let halfDamageTo : [NameUrl]
+    let noDamageFrom : [NameUrl]
+    let noDamageTo : [NameUrl]
+    
 }
 
-struct Move {
-    let move: NameLink
-}
-
-struct Sprites {
-    let backDefault: String?
-    let backFemale: String?
-    let backShiny: String?
-    let backShinyFemale: String?
-    let frontDefault: String?
-    let frontFemale: String?
-    let frontShiny: String?
-    let frontShinyFemale: String?
-}
-
-struct NameLink {
-    let name: String
-    let url: String
+struct NameUrl {
+    let name : String
+    let url : String
 }
