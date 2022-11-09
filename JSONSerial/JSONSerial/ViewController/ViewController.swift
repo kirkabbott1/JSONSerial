@@ -13,9 +13,9 @@ class ViewController: UIViewController {
     lazy var manualDecodeButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Manual Decode", for: .normal)
+        button.setTitle("Decode it", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .systemTeal
         button.addTarget(self, action: #selector(self.manualDecodeButtonPressed), for: .touchUpInside)
         
         return button
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
             return $0.move.name
         }
         
-        let alert = UIAlertController(title: "Glaceon Moves", message: "\(moveNames)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Dragon", message: "\(moveNames)", preferredStyle: .alert)
         let okayAction = UIAlertAction(title: "Okay", style: .default)
         alert.addAction(okayAction)
         
@@ -62,5 +62,6 @@ class ViewController: UIViewController {
     
 
 }
+
 
 

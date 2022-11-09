@@ -23,7 +23,6 @@ final class NetworkManager {
     }
     
 }
-
 // MARK: Manual Decoding
 extension NetworkManager {
     
